@@ -3,13 +3,21 @@ import { Car } from "../Models/Car.js";
 import { carsService } from "../Services/CarsService.js";
 import { getFormData } from "../Utils/FormHandler.js";
 import { Pop } from "../Utils/Pop.js";
-import { setHTML } from "../Utils/Writer.js";
+import { setHTML, setText } from "../Utils/Writer.js";
 
 function drawCars() {
   let template = "";
   appState.cars.forEach((car) => (template += car.CarCardTemplate));
   // TODO trigger bad set
   setHTML("listings", template);
+}
+
+function _drawButton() {
+  document
+    .getElementById("mainButton")
+    .setAttribute("onclick", "app.carsController.addCar()");
+
+  setText("mainButton", "🚗 Add a car");
 }
 
 export class CarsController {
@@ -30,6 +38,7 @@ export class CarsController {
   showCars() {
     this.getCars();
     setHTML("forms", Car.getCarForm());
+    _drawButton();
   }
 
   async handleSubmit() {
@@ -68,16 +77,18 @@ export class CarsController {
     appState.activeCar = null;
     const template = Car.getCarForm();
     setHTML("forms", template);
+    setText("rightBarLabel", "Add your Car Listing!");
   }
 
   beginEdit(id) {
     // TWO JOBS find the car by its id
     // and then what???
     // Then fill in the form with all the values
-    carsService.setActiveCar(id);
+    carsService.setActiveCar(id); 
     const editable = appState.activeCar;
     const template = Car.getCarForm(editable);
 
     setHTML("forms", template);
+    setText("rightBarLabel", "edit");
   }
 }

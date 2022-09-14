@@ -4,12 +4,20 @@ import { SandboxServer } from "../Services/AxiosService.js";
 import { jobsService } from "../Services/JobsService.js";
 import { getFormData } from "../Utils/FormHandler.js";
 import { Pop } from "../Utils/Pop.js";
-import { setHTML } from "../Utils/Writer.js";
+import { setHTML, setText } from "../Utils/Writer.js";
 
 function _drawJobs() {
   let template = "";
   appState.jobs.forEach((job) => (template += job.JobListingTemplate));
   setHTML("listings", template);
+}
+
+function _drawButton() {
+  document
+    .getElementById("mainButton")
+    .setAttribute("onclick", "app.jobsController.addJob()");
+
+  setText("mainButton", "🏬 Add Jobs");
 }
 
 export class JobsController {
@@ -22,6 +30,7 @@ export class JobsController {
     const editable = appState.activeJob;
     const template = Job.getJobForm(editable);
     setHTML("forms", template);
+    setText("rightBarLabel", "edit");
   }
 
   async deleteJob(id) {
@@ -59,11 +68,13 @@ export class JobsController {
     appState.activeJob = null;
     const template = Job.getJobForm();
     setHTML("forms", template);
+    setText("rightBarLabel", "Add your Job listing!");
   }
 
   showJobs() {
     this.getJobs();
     setHTML("forms", Job.getJobForm());
+    _drawButton();
   }
 
   async getJobs() {

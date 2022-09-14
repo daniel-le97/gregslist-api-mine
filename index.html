@@ -60,10 +60,11 @@
               class="btn btn-outline-light"
               data-bs-toggle="offcanvas"
               data-bs-target="#rightBar"
+              id="mainButton"
               onclick="app.carsController.addCar()">
               🚗 Add Car
             </button>
-            <button
+            <!-- <button
               class="btn btn-outline-light"
               data-bs-toggle="offcanvas"
               data-bs-target="#rightBar"
@@ -76,7 +77,7 @@
               data-bs-target="#rightBar"
               onclick="app.homesController.addHome()">
               🛌 Add home
-            </button>
+            </button> -->
           </div>
         </div>
       </nav>
@@ -95,7 +96,7 @@
       id="rightBar"
       aria-labelledby="rightBarLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="rightBarLabel">add/edit</h5>
+        <h5 class="offcanvas-title" id="rightBarLabel"></h5>
         <button
           type="button"
           class="btn-close"

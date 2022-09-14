@@ -3,12 +3,19 @@ import { Home } from "../Models/Home.js";
 import { homesService } from "../Services/homesService.js";
 import { getFormData } from "../Utils/FormHandler.js";
 import { Pop } from "../Utils/Pop.js";
-import { setHTML } from "../Utils/Writer.js";
+import { setHTML, setText } from "../Utils/Writer.js";
 
 function _drawHomes() {
   let template = "";
   appState.homes.forEach((home) => (template += home.HomeListingTemplate));
   setHTML("listings", template);
+}
+function _drawButton() {
+  document
+    .getElementById("mainButton")
+    .setAttribute("onclick", "app.homesController.addHome()");
+
+  setText("mainButton", "🛌 Add a Home");
 }
 
 export class HomesController {
@@ -40,6 +47,7 @@ export class HomesController {
     const editable = appState.activeHome;
     const template = Home.getHomesForm(editable);
     setHTML("forms", template);
+    setText("rightBarLabel", "edit");
   }
 
   async deleteHome(id) {
@@ -58,10 +66,12 @@ export class HomesController {
     appState.activeHome = null;
     const template = Home.getHomesForm();
     setHTML("forms", template);
+    setText("rightBarLabel", "Add your Home listing!");
   }
   showHomes() {
     this.getHomes();
     setHTML("forms", Home.getHomesForm());
+    _drawButton();
   }
   async getHomes() {
     try {
