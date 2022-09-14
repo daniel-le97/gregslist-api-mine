@@ -50,7 +50,7 @@ export class HomesController {
       }
       await homesService.deleteHome(id);
     } catch (error) {
-      console.error("[deleteJob]", error);
+      console.error("[deleteHome]", error);
     }
   }
 
